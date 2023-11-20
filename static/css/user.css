@@ -1,0 +1,7 @@
+#user-login-signup-div {
+    height: 100vh;
+}
+
+.field-errors{
+    color: red;
+}

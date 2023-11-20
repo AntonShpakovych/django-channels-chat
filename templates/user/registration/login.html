@@ -1,0 +1,48 @@
+{% extends "../../base.html" %}
+
+{% load static %}
+
+{% block css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/user.css' %}">
+{% endblock %}
+
+
+{% block content %}
+  <div id="user-login-signup-div" class="d-flex justify-content-center align-items-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">{% if is_signup %}Sign Up{% else %} Login {% endif %}</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                      <div class="mb-4">
+                        <label for="{{field.id_for_label}}" class="form-label">{{ field.label }}</label>
+                        <input
+                            type="{% if field.name == 'username' %}text{% else %}password{% endif %}"
+                            class="form-control"
+                            id="{{field.id_for_label}}"
+                            name="{{ field.name }}"
+                            required
+                        >
+                        <div class="field-errors">{{ field.errors }}</div>
+                      </div>
+                    {% endfor %}
+                    <div class="mb-4">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                      <input type="hidden" name="next" value="{{ next }}">
+                    </div>
+                </form>
+                <div class="other-variants text-center">
+                  {% if not is_signup %}
+                    <p>Not a member? <a href="{% url 'user:signup' %}">Sign up</a></p>
+                  {% else %}
+                    <p>Already have an account? <a href="{% url 'user:login' %}">Login</a></p>
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock %}

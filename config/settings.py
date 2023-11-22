@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    "bootstrap5",
+    "bootstrap4",
 
     "user",
     "chat",

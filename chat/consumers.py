@@ -1,16 +1,17 @@
 import json
 
 from django.contrib.auth import get_user_model
-from django.core import serializers
 
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+
+from chat.utils.chat_consumer import serialize_contact_data
 
 
 User = get_user_model()
 
 
-class NewConversationConsumer(AsyncWebsocketConsumer):
+class FindNewContacts(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
 
@@ -18,12 +19,12 @@ class NewConversationConsumer(AsyncWebsocketConsumer):
         data = json.loads(text_data)
 
         username = data["username"]
-        users = await self.get_new_users_by_username(username=username)
+        contacts = await self.get_new_contacts_by_username(username=username)
 
-        await self.send(text_data=json.dumps({"users": users}))
+        await self.send(text_data=json.dumps({"contacts": contacts}))
 
     @database_sync_to_async
-    def get_new_users_by_username(self, username: str):
+    def get_new_contacts_by_username(self, username: str):
         current_user_with_chats = User.objects.prefetch_related(
             "chats__members"
         ).get(
@@ -36,10 +37,12 @@ class NewConversationConsumer(AsyncWebsocketConsumer):
             for user in chat.members.all()
         }
 
-        return serializers.serialize(
-            "json",
-            User.objects.filter(
-                username__icontains=username
-            ).exclude(id__in=excluded_ids),
-            fields=["username", "is_online"]
-        )
+        excluded_ids.add(self.scope["user"].id)
+
+        user_data = User.objects.filter(
+            username__icontains=username
+        ).exclude(id__in=excluded_ids).values("username", "is_online")
+
+        serialized_user_data = serialize_contact_data(queryset=user_data)
+
+        return serialized_user_data

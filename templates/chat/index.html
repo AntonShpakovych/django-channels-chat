@@ -31,5 +31,7 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'js/new_conversation.js' %}"></script>
+  <script src="{% static 'js/toggle_active_class.js' %}"></script>
+  <script type="module" src="{% static 'js/contacts.js' %}"></script>
+  <script type="module" src="{% static 'js/new_contacts.js' %}"></script>
 {% endblock %}

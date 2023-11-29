@@ -20,7 +20,7 @@ class Chat(models.Model):
 
 
 class Message(models.Model):
-    chat_id = models.ForeignKey(
+    chat = models.ForeignKey(
         Chat,
         on_delete=models.CASCADE,
         related_name="messages"

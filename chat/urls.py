@@ -4,7 +4,7 @@ from chat import views
 
 
 urlpatterns = [
-    path("", views.index)
+    path("", views.index, name="chat-list")
 ]
 
 app_name = "chat"

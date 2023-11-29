@@ -11,26 +11,36 @@
 {% block content %}
   <div id="user-login-signup" class="d-flex justify-content-center align-items-center rounded-3">
     <div class="col-md-4">
-        <div class="card">
+        <div id="login-signup" class="card">
             <div class="card-body">
                 <h5 class="card-title text-center">{% if is_signup %}Sign Up{% else %} Login {% endif %}</h5>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
+                    <div class="field-errors">{{ form.non_field_errors }}</div>
                     {% for field in form %}
                       <div class="mb-4">
                         <label for="{{field.id_for_label}}" class="form-label">{{ field.label }}</label>
-                        <input
+                        {% if field.name != "photo" %}
+                          <input
                             type="{% if field.name == 'username' %}text{% else %}password{% endif %}"
                             class="form-control"
                             id="{{field.id_for_label}}"
                             name="{{ field.name }}"
                             required
-                        >
+                          >
+                        {% else %}
+                          <input
+                            type="file"
+                            id="{{field.id_for_label}}"
+                            name="{{ field.name }}"
+                            accept="image/jpeg, image/png, image/jpg"
+                          >
+                        {% endif %}
                         <div class="field-errors">{{ field.errors }}</div>
                       </div>
                     {% endfor %}
                     <div class="mb-4">
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" class="btn btn-primary">{% if not is_signup %}Login{% else %}Sign up{% endif %}</button>
                       <input type="hidden" name="next" value="{{ next }}">
                     </div>
                 </form>

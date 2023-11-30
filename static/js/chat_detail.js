@@ -6,6 +6,7 @@ function chatDetail(element) {
 
     if (data.hasOwnProperty("type") && data["type"] === "chat.message") {
       const message = functionGenerateMessage(data, data.user === currentUserUsername)
+      updateQuantity()
       chatHistoryDiv.innerHTML += message
     } else {
       generateChatDetail(data)

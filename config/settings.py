@@ -19,6 +19,13 @@ CHANNEL_LAYERS = {
     }
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
+
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
@@ -42,6 +49,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "user.middleware.ActiveUserMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -100,6 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "Europe/Kiev"
+
+USER_ONLINE_TIMEOUT = 60
+
+USER_LASTSEEN_TIMEOUT = 60*60*24*7
 
 USE_I18N = True
 

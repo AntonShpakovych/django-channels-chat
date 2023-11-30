@@ -83,7 +83,7 @@ function generateChatHistory(messages){
 
 function functionGenerateMessage(data, isCurrentUser) {
   let date = transformDate(data.date)
-  console.log(data)
+
   if (isCurrentUser) {
     return `<div class="d-flex justify-content-end mb-4 text-center">
     <div class="msg_container_send">
@@ -132,4 +132,12 @@ function generateChatHeader(title, quantity) {
 function generateChatDetail(data){
   generateChatHeader(data.title, data.quantity)
   generateChatHistory(data.messages)
+}
+
+
+function updateQuantity(){
+  const currentText = chatHeaderP.innerText;
+  const currentNumber = parseInt(currentText.match(/\d+/)[0]);
+  const newNumber = currentNumber + 1;
+  chatHeaderP.innerText = currentText.replace(currentNumber, newNumber);
 }

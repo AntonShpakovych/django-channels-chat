@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.core.serializers.json import DjangoJSONEncoder
+
 
 from chat.models import Chat
 from chat.utils.chat_consumer_helpers import (
@@ -99,7 +99,6 @@ class ChatDetailConsumer(AsyncWebsocketConsumer):
         await self.send(
             text_data=json.dumps(
                 chat_data,
-                cls=DjangoJSONEncoder
             )
         )
 
@@ -130,7 +129,6 @@ class ChatDetailConsumer(AsyncWebsocketConsumer):
 
         await self.send(text_data=json.dumps(
             chat_data,
-            cls=DjangoJSONEncoder
         ))
 
     @database_sync_to_async

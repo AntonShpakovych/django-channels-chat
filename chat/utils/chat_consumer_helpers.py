@@ -1,6 +1,4 @@
 from __future__ import annotations
-
-import datetime
 from typing import List, Dict, Set
 
 from django.contrib.auth import get_user_model
@@ -72,12 +70,12 @@ def user_prefetched_chats_members(
 
 def chat_history(
         chat: Chat
-) -> List[Dict[str, str | datetime]]:
+) -> List[Dict[str, str]]:
     return [
         {
             "user": message.user.username,
             "text": message.text,
-            "date": message.created_at,
+            "date": message.created_at.isoformat(),
             "photo": message.user.photo.url
         }
         for message in chat.messages.all()
@@ -110,7 +108,7 @@ def make_new_chat(
 def prepare_chat_data(
         chat: Chat,
         current_user: User
-) -> Dict[str, str | List[Dict[str, str | datetime]] | int]:
+) -> Dict[str, str | List[Dict[str, str]] | int]:
     messages = chat_history(chat=chat)
 
     return {
@@ -139,7 +137,7 @@ def prepare_chat_message(
         chat: Chat,
         user: User,
         new_message: str
-) -> Dict[str, str | datetime]:
+) -> Dict[str, str]:
     message = create_chat_message(
         chat=chat,
         user=user,
@@ -148,6 +146,6 @@ def prepare_chat_message(
     return {
         "user": user.username,
         "text": message.text,
-        "date": message.created_at,
+        "date": message.created_at.isoformat(),
         "photo": user.photo.url
     }

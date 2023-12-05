@@ -8,7 +8,7 @@
 
 
 ## About Project
- Schema CSV Generator is a tool that provides users with the ability to easily create CSV files with fake data based on their schemas. Users can define a schema with an unlimited number of columns, set pre-built data types, order, and additional information for each column if necessary for the selected type.
+The Django Channels Chat application is a web-based chat system built using Django Channels, an extension for Django that enables WebSocket for real-time and asynchronous communication.
 <hr>
 
 

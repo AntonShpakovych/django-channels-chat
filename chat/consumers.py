@@ -1,7 +1,5 @@
 import json
 
-from django.contrib.auth import get_user_model
-
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 
@@ -14,9 +12,6 @@ from chat.utils.chat_consumer_helpers import (
     prepare_chat_data,
     prepare_chat_message,
 )
-
-
-User = get_user_model()
 
 
 class FindNewContactsConsumer(AsyncWebsocketConsumer):

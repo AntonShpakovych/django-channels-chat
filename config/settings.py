@@ -11,7 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
-DEBUG = os.getenv("DJANGO_DEBUG_MODE")
+DEBUG = os.environ.get("DJANGO_DEBUG_MODE")
+
 
 CHANNEL_LAYERS = {
     "default": {
@@ -28,8 +29,6 @@ CACHES = {
         "LOCATION": os.getenv("DJANGO_CACHE_URL"),
     }
 }
-
-ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "daphne",
@@ -130,7 +129,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

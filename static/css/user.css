@@ -1,0 +1,11 @@
+#user-login-signup {
+    height: 100vh;
+}
+.field-errors{
+    color: red;
+}
+#login-signup{
+    color: white;
+    background-color: #4c4e7d;
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
+}

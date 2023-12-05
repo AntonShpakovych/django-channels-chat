@@ -1,0 +1,47 @@
+version: "3"
+services:
+    app:
+        build:
+            context: .
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./:/app
+        command: >
+          sh -c "
+                 python config/wait_for_db.py &&
+                 python manage.py migrate &&
+                 python manage.py runserver 0.0.0.0:8000"
+        env_file:
+            - .env
+        depends_on:
+            - db
+            - django_cache
+            - django_channels
+        restart: always
+    db:
+        image: "postgres"
+        container_name: db_service
+        env_file:
+            - .env
+        ports:
+            - "5433:5432"
+        volumes:
+            - db_data:/var/lib/postgresql/data/
+        restart: always
+    django_cache:
+        image: redis
+        command: --port 6380
+        container_name: cache_service
+        ports:
+            - "6380:6380"
+        restart: always
+    django_channels:
+        image: redis
+        container_name: channels_service
+        ports:
+            - "6379:6379"
+        restart: always
+volumes:
+    db_data:
+        driver: local

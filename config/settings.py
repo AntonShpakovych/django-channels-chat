@@ -13,7 +13,6 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = os.environ.get("DJANGO_DEBUG_MODE")
 
-
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
